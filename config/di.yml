@@ -3,3 +3,4 @@ services:
     class: Vainyl\Pdo\Factory\PdoConnectionFactory
   database.factory.pdo:
     class: Vainyl\Pdo\Factory\PdoDatabaseFactory
+    arguments: ['@connection.storage']

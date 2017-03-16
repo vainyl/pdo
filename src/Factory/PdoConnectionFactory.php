@@ -22,13 +22,13 @@ use Vainyl\Pdo\PdoConnection;
 class PdoConnectionFactory
 {
     /**
-     * @param string $connectionName
+     * @param string $name
      * @param array  $configData
      *
      * @return PdoConnection
      */
-    public function createConnection(string $connectionName, array $configData) : PdoConnection
+    public function createConnection(string $name, array $configData) : PdoConnection
     {
-        return new PdoConnection($connectionName, $configData);
+        return new PdoConnection($name, $configData);
     }
 }

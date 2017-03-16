@@ -32,8 +32,13 @@ class PdoDatabase extends AbstractMvccDatabase
     {
         try {
             return $this->getConnection()->beginTransaction();
-        } catch (\PDOException $e) {
-            throw new TransactionPdoDatabaseException($this, 'start', (string)$e->getCode(), $e->errorInfo);
+        } catch (\PDOException $exception) {
+            throw new TransactionPdoDatabaseException(
+                $this,
+                'start',
+                (string)$exception->getCode(),
+                $exception->errorInfo
+            );
         }
     }
 
@@ -44,8 +49,13 @@ class PdoDatabase extends AbstractMvccDatabase
     {
         try {
             return $this->getConnection()->commit();
-        } catch (\PDOException $e) {
-            throw new TransactionPdoDatabaseException($this, 'commit', (string)$e->getCode(), $e->errorInfo);
+        } catch (\PDOException $exception) {
+            throw new TransactionPdoDatabaseException(
+                $this,
+                'commit',
+                (string)$exception->getCode(),
+                $exception->errorInfo
+            );
         }
     }
 
@@ -56,8 +66,13 @@ class PdoDatabase extends AbstractMvccDatabase
     {
         try {
             return $this->getConnection()->rollBack();
-        } catch (\PDOException $e) {
-            throw new TransactionPdoDatabaseException($this, 'rollback', (string)$e->getCode(), $e->errorInfo);
+        } catch (\PDOException $exception) {
+            throw new TransactionPdoDatabaseException(
+                $this,
+                'rollback',
+                (string)$exception->getCode(),
+                $exception->errorInfo
+            );
         }
     }
 
@@ -77,8 +92,14 @@ class PdoDatabase extends AbstractMvccDatabase
                     $statement->errorInfo()
                 );
             }
-        } catch (\PDOException $e) {
-            throw new QueryPdoDatabaseException($this, $query, $bindParams, (string)$e->getCode(), $e->errorInfo);
+        } catch (\PDOException $exception) {
+            throw new QueryPdoDatabaseException(
+                $this,
+                $query,
+                $bindParams,
+                (string)$exception->getCode(),
+                $exception->errorInfo
+            );
         }
 
         return new PDOCursor($statement);

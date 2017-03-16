@@ -12,7 +12,7 @@ declare(strict_types = 1);
 
 namespace Vainyl\Pdo\Factory;
 
-use Vainyl\Pdo\PdoConnection;
+use Vainyl\Connection\Storage\ConnectionStorageInterface;
 use Vainyl\Pdo\PdoDatabase;
 
 /**
@@ -22,13 +22,26 @@ use Vainyl\Pdo\PdoDatabase;
  */
 class PdoDatabaseFactory
 {
+    private $connectionStorage;
+
     /**
-     * @param PdoConnection $pdoConnection
+     * PdoDatabaseFactory constructor.
+     *
+     * @param ConnectionStorageInterface $connectionStorage
+     */
+    public function __construct(ConnectionStorageInterface $connectionStorage)
+    {
+        $this->connectionStorage = $connectionStorage;
+    }
+
+    /**
+     * @param string $name
+     * @param array  $configData
      *
      * @return PdoDatabase
      */
-    public function createDatabase(PdoConnection $pdoConnection): PdoDatabase
+    public function createDatabase(string $name, array $configData): PdoDatabase
     {
-        return new PdoDatabase($pdoConnection);
+        return new PdoDatabase($this->connectionStorage->getConnection($configData['connection']));
     }
 }
