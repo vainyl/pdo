@@ -1,7 +1,0 @@
-services:
-  connection.pdo:
-    abstract: true
-    class: Vainyl\Pdo\PdoConnection
-  database.pdo:
-    abstract: true
-    class: Vainyl\Pdo\PdoDatabase
