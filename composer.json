@@ -13,7 +13,9 @@
         }
     },
     "require": {
-        "vainyl/core": "dev-master"
+        "vainyl/core": "dev-master",
+        "vainyl/connection": "dev-master",
+        "vainyl/database": "dev-master"
     },
     "config": {
         "secure-http": false
