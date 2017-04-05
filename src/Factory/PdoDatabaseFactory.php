@@ -8,11 +8,11 @@
  * @license   https://opensource.org/licenses/MIT MIT License
  * @link      https://vainyl.com
  */
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace Vainyl\Pdo\Factory;
 
-use Vainyl\Connection\Storage\ConnectionStorageInterface;
+use Vainyl\Connection\Storage\ConnectionStorage;
 use Vainyl\Pdo\PdoDatabase;
 
 /**
@@ -27,9 +27,9 @@ class PdoDatabaseFactory
     /**
      * PdoDatabaseFactory constructor.
      *
-     * @param ConnectionStorageInterface $connectionStorage
+     * @param ConnectionStorage $connectionStorage
      */
-    public function __construct(ConnectionStorageInterface $connectionStorage)
+    public function __construct(ConnectionStorage $connectionStorage)
     {
         $this->connectionStorage = $connectionStorage;
     }
@@ -42,6 +42,6 @@ class PdoDatabaseFactory
      */
     public function createDatabase(string $name, array $configData): PdoDatabase
     {
-        return new PdoDatabase($this->connectionStorage->getConnection($configData['connection']));
+        return new PdoDatabase($name, $this->connectionStorage->getConnection($configData['connection']));
     }
 }
