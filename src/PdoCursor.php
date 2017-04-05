@@ -8,7 +8,7 @@
  * @license   https://opensource.org/licenses/MIT MIT License
  * @link      https://vainyl.com
  */
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace Vainyl\Pdo;
 
@@ -58,7 +58,7 @@ class PdoCursor implements CursorInterface
     /**
      * @inheritDoc
      */
-    public function current() : array
+    public function current(): array
     {
         return $this->pdoStatementInstance->fetch($this->mode, \PDO::FETCH_ORI_ABS, $this->position);
     }
@@ -66,7 +66,7 @@ class PdoCursor implements CursorInterface
     /**
      * @inheritDoc
      */
-    public function next() : bool
+    public function next(): bool
     {
         $this->position++;
 
@@ -76,7 +76,7 @@ class PdoCursor implements CursorInterface
     /**
      * @inheritDoc
      */
-    public function valid() : bool
+    public function valid(): bool
     {
         return ($this->pdoStatementInstance->errorCode() === '00000');
     }
@@ -84,7 +84,7 @@ class PdoCursor implements CursorInterface
     /**
      * @inheritDoc
      */
-    public function close() : CursorInterface
+    public function close(): CursorInterface
     {
         $this->pdoStatementInstance->closeCursor();
 
@@ -94,7 +94,7 @@ class PdoCursor implements CursorInterface
     /**
      * @inheritDoc
      */
-    public function mode(int $mode) : CursorInterface
+    public function mode(int $mode): CursorInterface
     {
         $this->mode = $mode;
 
@@ -104,7 +104,7 @@ class PdoCursor implements CursorInterface
     /**
      * @inheritDoc
      */
-    public function count() : int
+    public function count(): int
     {
         return $this->pdoStatementInstance->rowCount();
     }
@@ -112,7 +112,7 @@ class PdoCursor implements CursorInterface
     /**
      * @inheritDoc
      */
-    public function getSingle() : array
+    public function getSingle(): array
     {
         $this->position++;
 
@@ -122,7 +122,7 @@ class PdoCursor implements CursorInterface
     /**
      * @inheritDoc
      */
-    public function getAll() : array
+    public function getAll(): array
     {
         $this->position = $this->pdoStatementInstance->rowCount();
 

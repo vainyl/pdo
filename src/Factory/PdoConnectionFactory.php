@@ -8,7 +8,7 @@
  * @license   https://opensource.org/licenses/MIT MIT License
  * @link      https://vainyl.com
  */
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace Vainyl\Pdo\Factory;
 
@@ -27,7 +27,7 @@ class PdoConnectionFactory
      *
      * @return PdoConnection
      */
-    public function createConnection(string $name, array $configData) : PdoConnection
+    public function createConnection(string $name, array $configData): PdoConnection
     {
         return new PdoConnection($name, $configData);
     }

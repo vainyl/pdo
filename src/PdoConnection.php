@@ -8,7 +8,8 @@
  * @license   https://opensource.org/licenses/MIT MIT License
  * @link      https://vainyl.com
  */
-declare(strict_types = 1);
+declare(strict_types=1);
+
 namespace Vainyl\Pdo;
 
 use Vainyl\Connection\AbstractConnection;
@@ -25,7 +26,7 @@ class PdoConnection extends AbstractConnection
      *
      * @return array
      */
-    protected function getCredentials(array $config) : array
+    protected function getCredentials(array $config): array
     {
         if (false === array_key_exists('sslmode', $config)) {
             $sslmode = '';
