@@ -28,7 +28,7 @@ class PdoCursor implements CursorInterface
     private $position = 0;
 
     /**
-     * VainDatabasePDOGenerator constructor.
+     * PdoCursor constructor.
      *
      * @param \PDOStatement $pdoStatementInstance
      * @param int           $mode
