@@ -13,9 +13,9 @@
         }
     },
     "require": {
-        "vainyl/core": "0.1.x-dev",
-        "vainyl/connection": "0.1.x-dev",
-        "vainyl/database": "0.1.x-dev"
+        "vainyl/core": "dev-master",
+        "vainyl/connection": "dev-master",
+        "vainyl/database": "dev-master"
     },
     "repositories": [
         {
