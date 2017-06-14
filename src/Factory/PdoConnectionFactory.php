@@ -24,7 +24,6 @@ use Vainyl\Pdo\PdoConnection;
  */
 class PdoConnectionFactory extends AbstractIdentifiable implements ConnectionFactoryInterface
 {
-
     /**
      * @inheritDoc
      */
