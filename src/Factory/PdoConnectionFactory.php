@@ -12,6 +12,9 @@ declare(strict_types=1);
 
 namespace Vainyl\Pdo\Factory;
 
+use Vainyl\Connection\ConnectionInterface;
+use Vainyl\Connection\Factory\ConnectionFactoryInterface;
+use Vainyl\Core\AbstractIdentifiable;
 use Vainyl\Pdo\PdoConnection;
 
 /**
@@ -19,16 +22,20 @@ use Vainyl\Pdo\PdoConnection;
  *
  * @author Taras P. Girnyk <taras.p.gyrnik@gmail.com>
  */
-class PdoConnectionFactory
+class PdoConnectionFactory extends AbstractIdentifiable implements ConnectionFactoryInterface
 {
+
     /**
-     * @param string $name
-     * @param array  $configData
-     *
-     * @return PdoConnection
+     * @inheritDoc
      */
-    public function createConnection(string $name, array $configData): PdoConnection
-    {
-        return new PdoConnection($name, $configData);
+    public function createConnection(
+        string $name,
+        string $host,
+        int $port,
+        string $userName,
+        string $password,
+        array $options
+    ): ConnectionInterface {
+        return new PdoConnection($name, $host, $port, $userName, $password, $options);
     }
 }

@@ -21,28 +21,37 @@ use Vainyl\Connection\AbstractConnection;
  */
 class PdoConnection extends AbstractConnection
 {
-    /**
-     * @param array $config
-     *
-     * @return array
-     */
-    protected function getCredentials(array $config): array
-    {
-        if (false === array_key_exists('sslmode', $config)) {
-            $sslmode = '';
-        } else {
-            $sslmode = $config['sslmode'];
-        }
+    private $host;
 
-        return [
-            $config['type'],
-            $config['host'],
-            $config['port'],
-            $config['dbname'],
-            $config['username'],
-            $config['password'],
-            $sslmode,
-        ];
+    private $port;
+
+    private $userName;
+
+    private $password;
+
+    /**
+     * PdoConnection constructor.
+     *
+     * @param string $connectionName
+     * @param string $host
+     * @param int    $port
+     * @param string $userName
+     * @param string $password
+     * @param array  $options
+     */
+    public function __construct(
+        $connectionName,
+        string $host,
+        int $port,
+        string $userName,
+        string $password,
+        array $options
+    ) {
+        $this->host = $host;
+        $this->port = $port;
+        $this->userName = $userName;
+        $this->password = $password;
+        parent::__construct($connectionName, $options);
     }
 
     /**
@@ -50,21 +59,20 @@ class PdoConnection extends AbstractConnection
      */
     public function establish()
     {
-        list ($type, $host, $port, $dbname, $username, $password, $sslmode) = $this->getCredentials(
-            $this->getConfigData()
-        );
+        $type = 'pgsql';
+        $database = 'default';
+        $sslMode = '';
+        $dsn = sprintf('%s:host=%s;port=%d;dbname=%s', $type, $this->host, $this->port, $database);
 
-        $dsn = sprintf('%s:host=%s;port=%d;dbname=%s', $type, $host, $port, $dbname);
-
-        if ('' !== $sslmode) {
-            $dsn .= sprintf(';sslmode=%s', $sslmode);
+        if ('' !== $sslMode) {
+            $dsn .= sprintf(';sslmode=%s', $sslMode);
         }
 
         $options = [
             \PDO::ATTR_EMULATE_PREPARES => true,
             \PDO::ATTR_ERRMODE          => \PDO::ERRMODE_EXCEPTION,
         ];
-        $pdo = new \PDO($dsn, $username, $password, $options);
+        $pdo = new \PDO($dsn, $this->userName, $this->password, $options);
         if (defined('PDO::PGSQL_ATTR_DISABLE_PREPARES')
             && (!isset($driverOptions[\PDO::PGSQL_ATTR_DISABLE_PREPARES])
                 || true === $driverOptions[\PDO::PGSQL_ATTR_DISABLE_PREPARES]
