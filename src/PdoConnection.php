@@ -21,9 +21,13 @@ use Vainyl\Connection\AbstractConnection;
  */
 class PdoConnection extends AbstractConnection
 {
+    private $engine;
+
     private $host;
 
     private $port;
+
+    private $databaseName;
 
     private $userName;
 
@@ -33,8 +37,11 @@ class PdoConnection extends AbstractConnection
      * PdoConnection constructor.
      *
      * @param string $connectionName
+     * @param string string
+     * @param string $engine
      * @param string $host
      * @param int    $port
+     * @param string $databaseName
      * @param string $userName
      * @param string $password
      * @param array  $options
@@ -42,13 +49,17 @@ class PdoConnection extends AbstractConnection
     public function __construct(
         $connectionName,
         string $host,
+        string $engine,
         int $port,
+        string $databaseName,
         string $userName,
         string $password,
         array $options
     ) {
+        $this->engine = $engine;
         $this->host = $host;
         $this->port = $port;
+        $this->databaseName = $databaseName;
         $this->userName = $userName;
         $this->password = $password;
         parent::__construct($connectionName, $options);
@@ -60,9 +71,8 @@ class PdoConnection extends AbstractConnection
     public function establish()
     {
         $type = 'pgsql';
-        $database = 'default';
         $sslMode = '';
-        $dsn = sprintf('%s:host=%s;port=%d;dbname=%s', $type, $this->host, $this->port, $database);
+        $dsn = sprintf('%s:host=%s;port=%d;dbname=%s', $type, $this->host, $this->port, $this->databaseName);
 
         if ('' !== $sslMode) {
             $dsn .= sprintf(';sslmode=%s', $sslMode);
