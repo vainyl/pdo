@@ -33,6 +33,8 @@ class PdoConnection extends AbstractConnection
 
     private $password;
 
+    private $options;
+
     /**
      * PdoConnection constructor.
      *
@@ -62,13 +64,14 @@ class PdoConnection extends AbstractConnection
         $this->databaseName = $databaseName;
         $this->userName = $userName;
         $this->password = $password;
-        parent::__construct($connectionName, $options);
+        $this->options = $options;
+        parent::__construct($connectionName);
     }
 
     /**
      * @inheritDoc
      */
-    public function establish()
+    public function doEstablish()
     {
         $type = 'pgsql';
         $sslMode = '';
