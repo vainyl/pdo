@@ -12,6 +12,9 @@ declare(strict_types=1);
 
 namespace Vainyl\Pdo\Factory;
 
+use Vainyl\Core\AbstractIdentifiable;
+use Vainyl\Database\DatabaseInterface;
+use Vainyl\Database\Factory\DatabaseFactoryInterface;
 use Vainyl\Pdo\PdoDatabase;
 
 /**
@@ -19,7 +22,7 @@ use Vainyl\Pdo\PdoDatabase;
  *
  * @author Taras P. Girnyk <taras.p.gyrnik@gmail.com>
  */
-class PdoDatabaseFactory
+class PdoDatabaseFactory extends AbstractIdentifiable implements DatabaseFactoryInterface
 {
     private $connectionStorage;
 
@@ -34,13 +37,13 @@ class PdoDatabaseFactory
     }
 
     /**
-     * @param string $name
-     * @param array  $configData
-     *
-     * @return PdoDatabase
+     * @inheritDoc
      */
-    public function createDatabase(string $name, array $configData): PdoDatabase
-    {
-        return new PdoDatabase($name, $this->connectionStorage[$configData['connection']]);
+    public function createDatabase(
+        string $databaseName,
+        string $connectionName,
+        array $options = []
+    ): DatabaseInterface {
+        return new PdoDatabase($databaseName, $this->connectionStorage[$connectionName]);
     }
 }
