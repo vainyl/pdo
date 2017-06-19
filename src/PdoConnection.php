@@ -39,8 +39,8 @@ class PdoConnection extends AbstractConnection
      * PdoConnection constructor.
      *
      * @param string $connectionName
-     * @param string string
      * @param string $engine
+     * @param string string
      * @param string $host
      * @param int    $port
      * @param string $databaseName
@@ -50,8 +50,8 @@ class PdoConnection extends AbstractConnection
      */
     public function __construct(
         $connectionName,
-        string $host,
         string $engine,
+        string $host,
         int $port,
         string $databaseName,
         string $userName,
