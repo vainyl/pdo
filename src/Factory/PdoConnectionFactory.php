@@ -27,16 +27,17 @@ class PdoConnectionFactory extends AbstractIdentifiable implements ConnectionFac
     /**
      * @inheritDoc
      */
-    public function createConnection(
-        string $name,
-        string $engine,
-        string $host,
-        int $port,
-        string $databaseName,
-        string $userName,
-        string $password,
-        array $options
-    ): ConnectionInterface {
-        return new PdoConnection($name, $host, $engine, $port, $databaseName, $userName, $password, $options);
+    public function createConnection(string $name, array $configData): ConnectionInterface
+    {
+        return new PdoConnection(
+            $name,
+            $configData['host'],
+            $configData['engine'],
+            $configData['port'],
+            $configData['database'],
+            $configData['user'],
+            $configData['password'],
+            []
+        );
     }
 }
