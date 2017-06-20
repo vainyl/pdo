@@ -80,7 +80,7 @@ class PdoDatabase extends AbstractMvccDatabase
     /**
      * @inheritDoc
      */
-    public function runQuery($query, array $bindParams, array $bindParamTypes = []): CursorInterface
+    public function runQuery($query, array $bindParams = [], array $bindParamTypes = []): CursorInterface
     {
         try {
             $statement = $this->getConnection()->prepare($query);
