@@ -12,13 +12,13 @@ declare(strict_types=1);
 
 namespace Vainyl\Pdo\Extension;
 
-use Vainyl\Core\Extension\AbstractExtension;
+use Vainyl\Core\Extension\AbstractFrameworkExtension;
 
 /**
  * Class PdoExtension
  *
  * @author Taras P. Girnyk <taras.p.gyrnik@gmail.com>
  */
-class PdoExtension extends AbstractExtension
+class PdoExtension extends AbstractFrameworkExtension
 {
 }
