@@ -73,9 +73,8 @@ class PdoConnection extends AbstractConnection
      */
     public function doEstablish()
     {
-        $type = 'pgsql';
         $sslMode = '';
-        $dsn = sprintf('%s:host=%s;port=%d;dbname=%s', $type, $this->host, $this->port, $this->databaseName);
+        $dsn = sprintf('%s:host=%s;port=%d;dbname=%s', $this->engine, $this->host, $this->port, $this->databaseName);
 
         if ('' !== $sslMode) {
             $dsn .= sprintf(';sslmode=%s', $sslMode);
