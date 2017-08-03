@@ -40,7 +40,6 @@ class PdoConnection extends AbstractConnection
      *
      * @param string $connectionName
      * @param string $engine
-     * @param string string
      * @param string $host
      * @param int    $port
      * @param string $databaseName
@@ -86,8 +85,8 @@ class PdoConnection extends AbstractConnection
         ];
         $pdo = new \PDO($dsn, $this->userName, $this->password, $options);
         if (defined('PDO::PGSQL_ATTR_DISABLE_PREPARES')
-            && (!isset($driverOptions[\PDO::PGSQL_ATTR_DISABLE_PREPARES])
-                || true === $driverOptions[\PDO::PGSQL_ATTR_DISABLE_PREPARES]
+            && (!isset($options[\PDO::PGSQL_ATTR_DISABLE_PREPARES])
+                || true === $options[\PDO::PGSQL_ATTR_DISABLE_PREPARES]
             )
         ) {
             $pdo->setAttribute(\PDO::PGSQL_ATTR_DISABLE_PREPARES, true);
