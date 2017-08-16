@@ -34,7 +34,7 @@ class AbstractPdoDatabaseException extends AbstractDatabaseException
      * @param array           $errorInfo
      * @param string          $message
      * @param int             $code
-     * @param \Exception|null $previous
+     * @param \Throwable|null $previous
      */
     public function __construct(
         PdoDatabase $database,
@@ -42,7 +42,7 @@ class AbstractPdoDatabaseException extends AbstractDatabaseException
         array $errorInfo,
         string $message = '',
         int $code = 500,
-        \Exception $previous = null
+        \Throwable $previous = null
     ) {
         $this->errorCode = $errorCode;
         $this->errorInfo = $errorInfo;
