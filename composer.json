@@ -14,9 +14,9 @@
     },
     "require": {
         "php": ">=7.1",
-        "vainyl/core": "dev-master",
-        "vainyl/connection": "dev-master",
-        "vainyl/database": "dev-master"
+        "vainyl/core": "0.2.x-dev",
+        "vainyl/connection": "0.2.x-dev",
+        "vainyl/database": "0.2.x-dev"
     },
     "repositories": [
         {
@@ -25,7 +25,7 @@
         }
     ],
     "provide": {
-        "vain/database": "dev-master"
+        "vain/database": "^0.2"
     },
     "prefer-stable": true,
     "minimum-stability": "dev"
