@@ -57,13 +57,13 @@ class PdoConnection extends AbstractConnection
         string $password,
         array $options
     ) {
-        $this->engine       = $engine;
-        $this->host         = $host;
-        $this->port         = $port;
+        $this->engine = $engine;
+        $this->host = $host;
+        $this->port = $port;
         $this->databaseName = $databaseName;
-        $this->userName     = $userName;
-        $this->password     = $password;
-        $this->options      = $options;
+        $this->userName = $userName;
+        $this->password = $password;
+        $this->options = $options;
         parent::__construct($connectionName);
     }
 
@@ -72,28 +72,18 @@ class PdoConnection extends AbstractConnection
      */
     public function doEstablish()
     {
-        $sslMode = array_key_exists('sslmode', $this->options)
-            ? $this->options['sslmode']
-            : '';
-        $charset = array_key_exists('charset', $this->options)
-            ? $this->options['charset']
-            : '';
-
+        $sslMode = '';
         $dsn = sprintf('%s:host=%s;port=%d;dbname=%s', $this->engine, $this->host, $this->port, $this->databaseName);
 
         if ('' !== $sslMode) {
             $dsn .= sprintf(';sslmode=%s', $sslMode);
         }
 
-        if ('' !== $charset) {
-            $dsn .= sprintf(';charset=%s', $charset);
-        }
-
         $options = [
             \PDO::ATTR_EMULATE_PREPARES => true,
             \PDO::ATTR_ERRMODE          => \PDO::ERRMODE_EXCEPTION,
         ];
-        $pdo     = new \PDO($dsn, $this->userName, $this->password, $options);
+        $pdo = new \PDO($dsn, $this->userName, $this->password, $options);
         if (defined('PDO::PGSQL_ATTR_DISABLE_PREPARES')
             && (!isset($options[\PDO::PGSQL_ATTR_DISABLE_PREPARES])
                 || true === $options[\PDO::PGSQL_ATTR_DISABLE_PREPARES]
