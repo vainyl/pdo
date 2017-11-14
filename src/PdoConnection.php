@@ -18,6 +18,7 @@ use Vainyl\Connection\AbstractConnection;
  * Class PdoConnection
  *
  * @author Taras P. Girnyk <taras.p.gyrnik@gmail.com>
+ * @author Andrii Dembitskiy <andrew.dembitskiy@gmail.com>
  */
 class PdoConnection extends AbstractConnection
 {
@@ -57,13 +58,14 @@ class PdoConnection extends AbstractConnection
         string $password,
         array $options
     ) {
-        $this->engine = $engine;
-        $this->host = $host;
-        $this->port = $port;
+        $this->engine       = $engine;
+        $this->host         = $host;
+        $this->port         = $port;
         $this->databaseName = $databaseName;
-        $this->userName = $userName;
-        $this->password = $password;
-        $this->options = $options;
+        $this->userName     = $userName;
+        $this->password     = $password;
+        $this->options      = $options;
+
         parent::__construct($connectionName);
     }
 
@@ -72,18 +74,13 @@ class PdoConnection extends AbstractConnection
      */
     public function doEstablish()
     {
-        $sslMode = '';
-        $dsn = sprintf('%s:host=%s;port=%d;dbname=%s', $this->engine, $this->host, $this->port, $this->databaseName);
-
-        if ('' !== $sslMode) {
-            $dsn .= sprintf(';sslmode=%s', $sslMode);
-        }
-
         $options = [
             \PDO::ATTR_EMULATE_PREPARES => true,
             \PDO::ATTR_ERRMODE          => \PDO::ERRMODE_EXCEPTION,
         ];
-        $pdo = new \PDO($dsn, $this->userName, $this->password, $options);
+
+        $pdo = new \PDO($this->getDsn(), $this->userName, $this->password, $options);
+
         if (defined('PDO::PGSQL_ATTR_DISABLE_PREPARES')
             && (!isset($options[\PDO::PGSQL_ATTR_DISABLE_PREPARES])
                 || true === $options[\PDO::PGSQL_ATTR_DISABLE_PREPARES]
@@ -93,5 +90,47 @@ class PdoConnection extends AbstractConnection
         }
 
         return $pdo;
+    }
+
+    /**
+     * @return string
+     */
+    protected function getDsn(): string
+    {
+        $dsn = sprintf('%s:host=%s;port=%d;dbname=%s', $this->engine, $this->host, $this->port, $this->databaseName);
+
+        if ('' !== ($sslmode = $this->getSslMode())) {
+            $dsn .= sprintf(';sslmode=%s', $sslmode);
+        }
+
+        if ('' !== ($charset = $this->getCharset())) {
+            $dsn .= sprintf(';charset=%s', $charset);
+        }
+
+        return $dsn;
+    }
+
+    /**
+     * @return string
+     */
+    protected function getSslMode(): string
+    {
+        if (array_key_exists('sslmode', $this->options)) {
+            return $this->options['sslmode'];
+        }
+
+        return '';
+    }
+
+    /**
+     * @return string
+     */
+    protected function getCharset(): string
+    {
+        if (array_key_exists('charset', $this->options)) {
+            return $this->options['charset'];
+        }
+
+        return '';
     }
 }
