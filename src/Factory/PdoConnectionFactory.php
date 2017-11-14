@@ -37,7 +37,7 @@ class PdoConnectionFactory extends AbstractIdentifiable implements ConnectionFac
             $configData['database'],
             $configData['user'],
             $configData['password'],
-            []
+            $configData
         );
     }
 }
